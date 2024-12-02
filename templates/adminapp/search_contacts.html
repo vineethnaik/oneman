@@ -1,0 +1,44 @@
+{% extends 'Navbar/Projectnavbar.html' %}
+{% load static %}
+<html>
+<head>
+    <title>Search Contacts</title>
+</head>
+<body>
+{% block body %}
+
+<div class="container text-center">
+  <div class="row">
+    <div class="col">
+      <h2>Search Contacts</h2>
+      <form method="get" action="{% url 'search_contacts' %}">
+        <input type="text" name="query" placeholder="Search by name or email" value="{{ query }}">
+        <br><br>
+        <div class="d-grid gap-2 col-6 mx-auto">
+          <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-auto d-flex align-items-center">
+      <div style="border-left: 2px solid black; height: 100%;"></div>
+    </div>
+
+    <div class="col">
+      <strong>Search Results</strong>
+      {% if results %}
+        <ul>
+          {% for contact in results %}
+            <li>{{ contact.name }} - {{ contact.email }} - {{ contact.phone_number }} - {{ contact.address }}</li>
+          {% endfor %}
+        </ul>
+      {% elif query %}
+        <p>No contacts found matching "{{ query }}"</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+</body>
+</html>
